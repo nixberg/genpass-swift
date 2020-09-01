@@ -2,6 +2,10 @@ import ArgumentParser
 import Foundation
 
 struct Genpass: ParsableCommand {
+    static var configuration = CommandConfiguration(
+        abstract: "Generates a lowercase alphanumeric password."
+    )
+    
     @Argument(help: "The desired security level.")
     var securityLevel: UInt = 128
     
