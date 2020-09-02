@@ -11,7 +11,9 @@ detect-remain-strategy-exact-spy-security
 ```
 
 ```console
-> genpass --urbit 80
+> genpass --urbit 96
+sicrup-sivmer-pannup-folmun-sollen-fitres
+
 dalnum-ricmug-mocfyl-divfeb-tinbyr
 ```
 
