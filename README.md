@@ -6,20 +6,25 @@
 ```
 
 ```console
-> genpass 64 --phrase
+> genpass --phrase 64
 detect-remain-strategy-exact-spy-security
+```
+
+```console
+> genpass --urbit 80
+dalnum-ricmug-mocfyl-divfeb-tinbyr
 ```
 
 ```console
 > genpass --help
 OVERVIEW: Generates a lowercase alphanumeric password.
 
-USAGE: genpass [<security-level>] [--phrase]
+USAGE: genpass [--phrase] [--urbit] [<security-level>]
 
 ARGUMENTS:
   <security-level>        The desired security level. (default: 128)
 
 OPTIONS:
-  --phrase                Generate a passphrase instead. 
+  --phrase/--urbit        Generate a passphrase instead. 
   -h, --help              Show help information.
 ```
