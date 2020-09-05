@@ -15,7 +15,6 @@ let package = Package(
             name: "Genpass",
             dependencies: [
                 .product(name: "ArgumentParser", package: "swift-argument-parser")
-            ]
-        )
+            ])
     ]
 )

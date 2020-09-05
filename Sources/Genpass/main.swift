@@ -8,8 +8,7 @@ enum AlternativeOutputStyle: EnumerableFlag {
 
 struct Genpass: ParsableCommand {
     static var configuration = CommandConfiguration(
-        abstract: "Generates a lowercase alphanumeric password."
-    )
+        abstract: "Generates a lowercase alphanumeric password.")
     
     @Flag(help: "Generate a passphrase instead.")
     var alternativeOutputStyle: AlternativeOutputStyle?
@@ -26,7 +25,7 @@ struct Genpass: ParsableCommand {
     func run() {
         switch alternativeOutputStyle {
         case nil:
-            let characters = "abcdefghijklmnopqrstuvwxyz0123456789"
+            let characters = Array("abcdefghijklmnopqrstuvwxyz0123456789")
             let bitsPerCharacter = log2(Float64(characters.count))
             let characterCount = Int((securityLevel / bitsPerCharacter).rounded(.up))
             print(String((0..<characterCount).map { _ in characters.randomElement()! }))
