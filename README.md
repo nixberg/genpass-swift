@@ -1,5 +1,7 @@
 # genpass
 
+## Usage
+
 ```console
 > genpass
 0c2vhemnywrn93aiwjdekxin7
@@ -27,4 +29,11 @@ ARGUMENTS:
 OPTIONS:
   --phrase/--urbit        Generate a passphrase instead. 
   -h, --help              Show help information.
+```
+
+## Installation
+
+```console
+> brew tap nixberg/tap
+> brew install genpass
 ```
