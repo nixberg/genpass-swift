@@ -4,7 +4,7 @@
 
 ```console
 > genpass
-0c2vhemnywrn93aiwjdekxin7
+8nebgm6etbwpqna235m6es9yea
 ```
 
 ```console
@@ -24,7 +24,7 @@ OVERVIEW: Generates a lowercase alphanumeric password.
 USAGE: genpass [--phrase] [--urbit] [<security-level>]
 
 ARGUMENTS:
-  <security-level>        The desired security level. (default: 128)
+  <security-level>        The desired security level. (default: 128.0)
 
 OPTIONS:
   --phrase/--urbit        Generate a passphrase instead. 

@@ -32,17 +32,25 @@ struct Genpass: ParsableCommand {
             print(password)
             
         case .phrase:
-            let bitsPerWord = log2(Float64(words.count))
-            let wordCount = Int((securityLevel / bitsPerWord).rounded(.up))
-            print((0..<wordCount).map { _ in words.randomElement()! }.joined(separator: "-"))
+            assert(words.count == 2048)
+            assert(Set(words).count == 2048)
+            let wordCount = Int((securityLevel / 11).rounded(.up))
+            let password = (0..<wordCount)
+                .map { _ in words.randomElement()! }
+                .joined(separator: "-")
+            print(password)
             
         case .urbit:
             assert(prefixes.count == 256)
             assert(suffixes.count == 256)
+            assert(Set(prefixes).count == 256)
+            assert(Set(suffixes).count == 256)
+            assert(Set(prefixes).isDisjoint(with: suffixes))
             let wordCount = Int((securityLevel / 16).rounded(.up))
-            print((0..<wordCount).map { _ in
-                prefixes.randomElement()! + suffixes.randomElement()!
-            }.joined(separator: "-"))
+            let password = (0..<wordCount)
+                .map { _ in prefixes.randomElement()! + suffixes.randomElement()! }
+                .joined(separator: "-")
+            print(password)
         }
     }
 }
