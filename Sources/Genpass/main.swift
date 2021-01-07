@@ -1,5 +1,4 @@
 import ArgumentParser
-import Foundation
 
 enum AlternativeOutputStyle: EnumerableFlag {
     case phrase
@@ -25,10 +24,12 @@ struct Genpass: ParsableCommand {
     func run() {
         switch alternativeOutputStyle {
         case nil:
-            let characters = Array("abcdefghijklmnopqrstuvwxyz0123456789")
-            let bitsPerCharacter = log2(Float64(characters.count))
-            let characterCount = Int((securityLevel / bitsPerCharacter).rounded(.up))
-            print(String((0..<characterCount).map { _ in characters.randomElement()! }))
+            let characters = Array("abcdefghjkmnpqrstuwxyz0123456789") // Excluding "ilov".
+            assert(characters.count == 32)
+            assert(Set(characters).count == 32)
+            let characterCount = Int((securityLevel / 5).rounded(.up))
+            let password = String((0..<characterCount).map { _ in characters.randomElement()! })
+            print(password)
             
         case .phrase:
             let bitsPerWord = log2(Float64(words.count))
