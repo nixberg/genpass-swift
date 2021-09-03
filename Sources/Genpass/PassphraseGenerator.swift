@@ -1,4 +1,17 @@
-let words: [String] = [
+struct PassphraseGenerator: PasswordGenerator {
+    init() {
+        assert(words.count == 2048)
+    }
+    
+    func generate(securityLevel: Float64) -> String {
+        let wordCount = Int((securityLevel / 11).rounded(.up))
+        return (0..<wordCount)
+            .map { _ in words.randomElement()! }
+            .joined(separator: "-")
+    }
+}
+
+fileprivate let words: Set<String> = [
     "abandon", "ability", "able", "about", "above", "absent", "absorb", "abstract", "absurd",
     "abuse", "access", "accident", "account", "accuse", "achieve", "acid", "acoustic", "acquire",
     "across", "act", "action", "actor", "actress", "actual", "adapt", "add", "addict", "address",

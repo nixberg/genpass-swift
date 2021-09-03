@@ -1,4 +1,19 @@
-let prefixes: [String] = [
+struct UrbitStyleGenerator: PasswordGenerator {
+    init() {
+        assert(prefixes.count == 256)
+        assert(suffixes.count == 256)
+        assert(prefixes.isDisjoint(with: suffixes))
+    }
+    
+    func generate(securityLevel: Float64) -> String {
+        let wordCount = Int((securityLevel / 16).rounded(.up))
+        return (0..<wordCount)
+            .map { _ in prefixes.randomElement()! + suffixes.randomElement()! }
+            .joined(separator: "-")
+    }
+}
+
+fileprivate let prefixes: Set<String> = [
     "doz", "mar", "bin", "wan", "sam", "lit", "sig", "hid", "fid", "lis", "sog", "dir", "wac",
     "sab", "wis", "sib", "rig", "sol", "dop", "mod", "fog", "lid", "hop", "dar", "dor", "lor",
     "hod", "fol", "rin", "tog", "sil", "mir", "hol", "pas", "lac", "rov", "liv", "dal", "sat",
@@ -21,7 +36,7 @@ let prefixes: [String] = [
     "fod", "pon", "sov", "noc", "sor", "lav", "mat", "mip", "fip"
 ]
 
-let suffixes: [String] = [
+fileprivate let suffixes: Set<String> = [
     "zod", "nec", "bud", "wes", "sev", "per", "sut", "let", "ful", "pen", "syt", "dur", "wep",
     "ser", "wyl", "sun", "ryp", "syx", "dyr", "nup", "heb", "peg", "lup", "dep", "dys", "put",
     "lug", "hec", "ryt", "tyv", "syd", "nex", "lun", "mep", "lut", "sep", "pes", "del", "sul",
