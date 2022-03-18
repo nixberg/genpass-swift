@@ -1,11 +1,14 @@
 import ArgumentParser
 
 protocol PasswordGenerator {
-    func generate(securityLevel: Float64) -> String
+    func generatePassword<RNG>(
+        atSecurityLevel securityLevel: Float64,
+        using rng: inout RNG
+    ) -> String where RNG: RandomNumberGenerator
 }
 
 @main
-struct Genpass: ParsableCommand {
+fileprivate struct Genpass: ParsableCommand {
     static var configuration = CommandConfiguration(
         abstract: "Generates a password.")
     
@@ -19,22 +22,46 @@ struct Genpass: ParsableCommand {
         guard securityLevel > 0 else {
             throw ValidationError("Please specify a 'security-level' greater than zero.")
         }
+        guard let _ = Int(exactly: securityLevel.rounded(.up)) else {
+            throw ValidationError("Please specify a smaller 'security-level'.")
+        }
     }
     
     func run() {
-        switch outputStyle {
+        var rng = SystemRandomNumberGenerator()
+        print(outputStyle.correspondingPasswordGenerator
+            .generatePassword(atSecurityLevel: securityLevel, using: &rng))
+    }
+}
+
+fileprivate enum OutputStyle: EnumerableFlag {
+    case base32
+    case passphrase
+    case urbitStyle
+    
+    var correspondingPasswordGenerator: any PasswordGenerator {
+        switch self {
         case .base32:
-            print(Base32Generator().generate(securityLevel: securityLevel))
+            return Base32Generator()
         case .passphrase:
-            print(PassphraseGenerator().generate(securityLevel: securityLevel))
+            return PassphraseGenerator()
         case .urbitStyle:
-            print(UrbitStyleGenerator().generate(securityLevel: securityLevel))
+            return UrbitStyleGenerator()
         }
     }
 }
 
-enum OutputStyle: EnumerableFlag {
-    case base32
-    case passphrase
-    case urbitStyle
+extension BinaryInteger {
+    init<T: BinaryFloatingPoint>(roundingUp source: T) {
+        self.init(exactly: source.rounded(.up))!
+    }
+}
+
+extension Collection {
+    func randomSampleWithReplacement<RNG>(count: Int, using rng: inout RNG) -> [Element]
+    where RNG: RandomNumberGenerator {
+        (0..<count).compactMap { _ in
+            self.randomElement(using: &rng) // NOTE: Not necessarily stable across Swift versions.
+        }
+    }
 }

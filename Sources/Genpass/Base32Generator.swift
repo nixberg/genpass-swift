@@ -6,8 +6,11 @@ struct Base32Generator: PasswordGenerator {
         self.characterSet = characterSet
     }
     
-    func generate(securityLevel: Float64) -> String {
-        let characterCount = Int((securityLevel / 5).rounded(.up))
-        return String((0..<characterCount).map { _ in characterSet.randomElement()! })
+    func generatePassword<RNG>(
+        atSecurityLevel securityLevel: Float64,
+        using rng: inout RNG
+    ) -> String where RNG: RandomNumberGenerator {
+        let count = Int(roundingUp: securityLevel / 5)
+        return String(characterSet.randomSampleWithReplacement(count: count, using: &rng))
     }
 }

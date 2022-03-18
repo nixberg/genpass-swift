@@ -5,11 +5,15 @@ struct UrbitStyleGenerator: PasswordGenerator {
         assert(prefixes.isDisjoint(with: suffixes))
     }
     
-    func generate(securityLevel: Float64) -> String {
-        let wordCount = Int((securityLevel / 16).rounded(.up))
-        return (0..<wordCount)
-            .map { _ in prefixes.randomElement()! + suffixes.randomElement()! }
-            .joined(separator: "-")
+    func generatePassword<RNG>(
+        atSecurityLevel securityLevel: Float64,
+        using rng: inout RNG
+    ) -> String where RNG: RandomNumberGenerator {
+        let count = Int(roundingUp: securityLevel / (2 * 8))
+        return zip(
+            prefixes.randomSampleWithReplacement(count: count, using: &rng),
+            suffixes.randomSampleWithReplacement(count: count, using: &rng)
+        ).map(+).joined(separator: "-")
     }
 }
 

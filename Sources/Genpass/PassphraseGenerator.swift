@@ -3,10 +3,13 @@ struct PassphraseGenerator: PasswordGenerator {
         assert(words.count == 2048)
     }
     
-    func generate(securityLevel: Float64) -> String {
-        let wordCount = Int((securityLevel / 11).rounded(.up))
-        return (0..<wordCount)
-            .map { _ in words.randomElement()! }
+    func generatePassword<RNG>(
+        atSecurityLevel securityLevel: Float64,
+        using rng: inout RNG
+    ) -> String where RNG: RandomNumberGenerator {
+        let count = Int(roundingUp: securityLevel / 11)
+        return words
+            .randomSampleWithReplacement(count: count, using: &rng)
             .joined(separator: "-")
     }
 }
