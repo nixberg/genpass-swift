@@ -1,14 +1,8 @@
 import ArgumentParser
-
-protocol PasswordGenerator {
-    func generatePassword<RNG>(
-        atSecurityLevel securityLevel: Float64,
-        using rng: inout RNG
-    ) -> String where RNG: RandomNumberGenerator
-}
+import PasswordGenerators
 
 @main
-fileprivate struct Genpass: ParsableCommand {
+struct Genpass: ParsableCommand {
     static var configuration = CommandConfiguration(
         abstract: "Generates a password.")
     
@@ -34,9 +28,10 @@ fileprivate struct Genpass: ParsableCommand {
     }
 }
 
-fileprivate enum OutputStyle: EnumerableFlag {
+enum OutputStyle: EnumerableFlag {
     case base32
     case passphrase
+    case safariStyle
     case urbitStyle
     
     var correspondingPasswordGenerator: any PasswordGenerator {
@@ -45,23 +40,10 @@ fileprivate enum OutputStyle: EnumerableFlag {
             return Base32Generator()
         case .passphrase:
             return PassphraseGenerator()
+        case .safariStyle:
+            return SafariStyleGenerator()
         case .urbitStyle:
             return UrbitStyleGenerator()
-        }
-    }
-}
-
-extension BinaryInteger {
-    init<T: BinaryFloatingPoint>(roundingUp source: T) {
-        self.init(exactly: source.rounded(.up))!
-    }
-}
-
-extension Collection {
-    func randomSampleWithReplacement<RNG>(count: Int, using rng: inout RNG) -> [Element]
-    where RNG: RandomNumberGenerator {
-        (0..<count).compactMap { _ in
-            self.randomElement(using: &rng) // NOTE: Not necessarily stable across Swift versions.
         }
     }
 }

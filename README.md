@@ -13,6 +13,11 @@ detect-remain-strategy-exact-spy-security
 ```
 
 ```console
+> genpass --safari-style 80
+nmnxui-xgd3lt-pfKiyo
+```
+
+```console
 > genpass --urbit-style 96
 sicrup-sivmer-pannup-folmun-sollen-fitres
 ```
@@ -21,13 +26,13 @@ sicrup-sivmer-pannup-folmun-sollen-fitres
 > genpass --help
 OVERVIEW: Generates a password.
 
-USAGE: genpass [--base32] [--passphrase] [--urbit-style] [<security-level>]
+USAGE: genpass [--base32] [--passphrase] [--safari-style] [--urbit-style] [<security-level>]
 
 ARGUMENTS:
   <security-level>        The desired security level. (default: 128.0)
 
 OPTIONS:
-  --base32/--passphrase/--urbit-style
+  --base32/--passphrase/--safari-style/--urbit-style
                           The output style. (default: base32)
   -h, --help              Show help information.
 ```
@@ -35,6 +40,5 @@ OPTIONS:
 ## Installation
 
 ```console
-> brew tap nixberg/tap
-> brew install genpass
+> brew install nixberg/tap/genpass
 ```
