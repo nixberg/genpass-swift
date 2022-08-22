@@ -12,7 +12,7 @@ public struct SafariStyleGenerator: PasswordGenerator {
         atSecurityLevel securityLevel: Float64,
         using rng: inout some RandomNumberGenerator
     ) -> String {
-        // Note: Conservative estimate. Three blocks provide at least 82 bits.
+        // Conservative estimate. Three blocks provide at least 82 bits.
         var characters = Self.lowercaseLetters.randomSampleWithReplacement(
             count: 6 * Int(roundingUp: ((securityLevel - .log2(24 * 10)) / .log2(25) + 2) / 6),
             using: &rng

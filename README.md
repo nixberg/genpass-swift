@@ -13,8 +13,8 @@ detect-remain-strategy-exact-spy-security
 ```
 
 ```console
-> genpass --safari-style 80
-nmnxui-xgd3lt-pfKiyo
+> genpass --safari-style
+spgqkf-hH0ghn-batigy
 ```
 
 ```console
@@ -24,17 +24,20 @@ sicrup-sivmer-pannup-folmun-sollen-fitres
 
 ```console
 > genpass --help
-OVERVIEW: Generates a password.
+OVERVIEW: A utility for generating passwords.
 
-USAGE: genpass [--base32] [--passphrase] [--safari-style] [--urbit-style] [<security-level>]
-
-ARGUMENTS:
-  <security-level>        The desired security level. (default: 128.0)
+USAGE: genpass <subcommand>
 
 OPTIONS:
-  --base32/--passphrase/--safari-style/--urbit-style
-                          The output style. (default: base32)
   -h, --help              Show help information.
+
+SUBCOMMANDS:
+  base32 (default)        Generate a password from a 32-character set.
+  passphrase              Generate a passphrase from a set of words.
+  safari-style            Generate a password in the style of Safari’s password manager.
+  urbit-style             Generate a password in the style of Urbit’s @q encoding.
+
+  See 'genpass help <subcommand>' for detailed help.
 ```
 
 ## Installation

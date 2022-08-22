@@ -1,8 +1,10 @@
 public protocol PasswordGenerator {
+    associatedtype Output
+    
     func generatePassword(
         atSecurityLevel securityLevel: Float64,
         using rng: inout some RandomNumberGenerator
-    ) -> String
+    ) -> Output
 }
 
 extension BinaryInteger {
