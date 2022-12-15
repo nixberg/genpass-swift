@@ -10,13 +10,16 @@ extension Genpass {
         @OptionGroup
         var commonOptions: CommonOptions
         
+        @OptionGroup
+        var securityLevelOptions: SecurityLevelOptions
+        
         mutating func run() {
-            var rng = SystemRandomNumberGenerator()
-            let password = UrbitStyleGenerator().generatePassword(
-                atSecurityLevel: commonOptions.securityLevel,
-                using: &rng
-            )
-            print(password)
+            let passwordGenerator = UrbitStyleGenerator()
+            print(passwords: (0..<commonOptions.count).map { _ in
+                passwordGenerator.generatePassword(
+                    atSecurityLevel: securityLevelOptions.securityLevel
+                )
+            }, terminator: commonOptions.terminator)
         }
     }
 }

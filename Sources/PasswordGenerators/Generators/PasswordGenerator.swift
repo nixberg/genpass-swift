@@ -7,6 +7,15 @@ public protocol PasswordGenerator {
     ) -> Output
 }
 
+extension PasswordGenerator {
+    public func generatePassword(
+        atSecurityLevel securityLevel: Float64
+    ) -> Output {
+        var rng = SystemRandomNumberGenerator()
+        return self.generatePassword(atSecurityLevel: securityLevel, using: &rng)
+    }
+}
+
 extension BinaryInteger {
     init(roundingUp source: some BinaryFloatingPoint) {
         self.init(exactly: source.rounded(.up))!

@@ -1,8 +1,8 @@
 public struct UrbitStyleGenerator: PasswordGenerator {
     public init() {
-        assert(Self.prefixes.count == 256)
-        assert(Self.suffixes.count == 256)
-        assert(Self.prefixes.isDisjoint(with: Self.suffixes))
+        assert(Set.prefixes.count == 256)
+        assert(Set.suffixes.count == 256)
+        assert(Set.prefixes.isDisjoint(with: Set.suffixes))
     }
     
     public func generatePassword(
@@ -11,14 +11,14 @@ public struct UrbitStyleGenerator: PasswordGenerator {
     ) -> String {
         let wordCount = Int(roundingUp: securityLevel / (2 * 8))
         return zip(
-            Self.prefixes.randomSampleWithReplacement(count: wordCount, using: &rng),
-            Self.suffixes.randomSampleWithReplacement(count: wordCount, using: &rng)
+            Set.prefixes.randomSampleWithReplacement(count: wordCount, using: &rng),
+            Set.suffixes.randomSampleWithReplacement(count: wordCount, using: &rng)
         ).lazy.map(+).joined(separator: "-")
     }
 }
 
-fileprivate extension UrbitStyleGenerator {
-    static let prefixes: Set<String> = [
+private extension Set<String> {
+    static let prefixes: Self = [
         "doz", "mar", "bin", "wan", "sam", "lit", "sig", "hid", "fid", "lis", "sog", "dir",
         "wac", "sab", "wis", "sib", "rig", "sol", "dop", "mod", "fog", "lid", "hop", "dar",
         "dor", "lor", "hod", "fol", "rin", "tog", "sil", "mir", "hol", "pas", "lac", "rov",
@@ -43,7 +43,7 @@ fileprivate extension UrbitStyleGenerator {
         "lav", "mat", "mip", "fip",
     ]
     
-    static let suffixes: Set<String> = [
+    static let suffixes: Self = [
         "zod", "nec", "bud", "wes", "sev", "per", "sut", "let", "ful", "pen", "syt", "dur",
         "wep", "ser", "wyl", "sun", "ryp", "syx", "dyr", "nup", "heb", "peg", "lup", "dep",
         "dys", "put", "lug", "hec", "ryt", "tyv", "syd", "nex", "lun", "mep", "lut", "sep",
