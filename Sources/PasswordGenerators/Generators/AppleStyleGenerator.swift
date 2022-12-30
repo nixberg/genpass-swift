@@ -44,7 +44,7 @@ private extension Array<Character> {
         let (index, element) = self.indexed().shuffled(using: &rng).first(where: {
             $0.element != "o"
         })! // Some letters (that is, consonants) are guaranteed to not be "o".
-        self[index] = element.uppercased()
+        self[index] = element.uppercased()!
     }
     
     func words(using rng: inout some RandomNumberGenerator) -> [SubSequence] {
@@ -64,10 +64,12 @@ private extension Array<Character> {
 }
 
 private extension Character {
-    func uppercased() -> Self {
-        let uppercased: String = self.uppercased()
-        assert(uppercased.count == 1)
-        return uppercased.first!
+    func uppercased() -> Self? {
+        let string: String = self.uppercased()
+        guard string.count == 1 else {
+            return nil
+        }
+        return string.first
     }
 }
 
