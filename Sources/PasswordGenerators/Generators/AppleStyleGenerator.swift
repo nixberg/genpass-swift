@@ -41,9 +41,9 @@ private extension Set<Character> {
 
 private extension Array<Character> {
     mutating func uppercaseRandomCharacter(using rng: inout some RandomNumberGenerator) {
-        let (index, element) = self.indexed().shuffled(using: &rng).first(where: {
+        let (index, element) = self.indexed().randomSample(count: 7, using: &rng).first(where: {
             $0.element != "o"
-        })! // Some letters (that is, consonants) are guaranteed to not be "o".
+        })! // Consonants are guaranteed to not be "o".
         self[index] = element.uppercased()!
     }
     
