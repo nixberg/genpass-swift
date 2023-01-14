@@ -14,20 +14,13 @@ public struct AppleStyleGenerator: PasswordGenerator {
         atSecurityLevel securityLevel: Float64,
         using rng: inout some RandomNumberGenerator
     ) -> String {
-        var letters = (0...2).cycled().prefix(17).map {
-            switch $0 {
-            case 0, 2:
-                return Set.consonants.randomElement(using: &rng)!
-            case 1:
-                return Set.vovels.randomElement(using: &rng)!
-            default:
-                fatalError()
-            }
-        }
+        var letters = Array.randomLetters(using: &rng)
         
         letters.uppercaseRandomCharacter(using: &rng)
         
-        return String(letters.words(using: &rng).joined(separator: "-"))
+        let words = letters.words(using: &rng)
+        
+        return String(words.joined(separator: "-"))
     }
 }
 
@@ -40,6 +33,19 @@ private extension Set<Character> {
 }
 
 private extension Array<Character> {
+    static func randomLetters(using rng: inout some RandomNumberGenerator) -> Self {
+        (0...2).cycled().prefix(17).map {
+            switch $0 {
+            case 0, 2:
+                return Set.consonants.randomElement(using: &rng)!
+            case 1:
+                return Set.vovels.randomElement(using: &rng)!
+            default:
+                fatalError()
+            }
+        }
+    }
+    
     mutating func uppercaseRandomCharacter(using rng: inout some RandomNumberGenerator) {
         let (index, element) = self.indexed().randomSample(count: 7, using: &rng).first(where: {
             $0.element != "o"
