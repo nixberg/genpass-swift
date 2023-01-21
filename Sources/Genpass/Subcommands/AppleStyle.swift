@@ -13,7 +13,7 @@ extension Genpass {
         mutating func run() {
             let passwordGenerator = AppleStyleGenerator()
             print(passwords: (0..<commonOptions.count).map { _ in
-                passwordGenerator.generatePassword(atSecurityLevel: 0)
+                passwordGenerator.generatePassword(atSecurityLevel: 64)
             }, terminator: commonOptions.terminator)
         }
     }
