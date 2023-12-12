@@ -17,8 +17,8 @@ public struct UrbitStyleGenerator: PasswordGenerator {
     }
 }
 
-private extension Set<String> {
-    static let prefixes: Self = [
+extension Set<String> {
+    fileprivate static let prefixes: Self = [
         "doz", "mar", "bin", "wan", "sam", "lit", "sig", "hid", "fid", "lis", "sog", "dir",
         "wac", "sab", "wis", "sib", "rig", "sol", "dop", "mod", "fog", "lid", "hop", "dar",
         "dor", "lor", "hod", "fol", "rin", "tog", "sil", "mir", "hol", "pas", "lac", "rov",
@@ -43,7 +43,7 @@ private extension Set<String> {
         "lav", "mat", "mip", "fip",
     ]
     
-    static let suffixes: Self = [
+    fileprivate static let suffixes: Self = [
         "zod", "nec", "bud", "wes", "sev", "per", "sut", "let", "ful", "pen", "syt", "dur",
         "wep", "ser", "wyl", "sun", "ryp", "syx", "dyr", "nup", "heb", "peg", "lup", "dep",
         "dys", "put", "lug", "hec", "ryt", "tyv", "syd", "nex", "lun", "mep", "lut", "sep",

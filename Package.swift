@@ -1,20 +1,24 @@
-// swift-tools-version:5.7
+// swift-tools-version:5.9
 
 import PackageDescription
 
 let package = Package(
     name: "genpass-swift",
-    platforms: [
-        .macOS(.v10_15),
-    ],
     products: [
-        .executable(name: "genpass", targets: ["Genpass"]),
-        .executable(name: "format-word-list", targets: ["WordListFormatter"]),
+        .executable(
+            name: "genpass",
+            targets: ["Genpass"]),
     ],
     dependencies: [
-        .package(url: "https://github.com/apple/swift-argument-parser", from: "1.0.0"),
-        .package(url: "https://github.com/apple/swift-algorithms", from: "1.0.0"),
-        .package(url: "https://github.com/apple/swift-numerics", from: "1.0.0"),
+        .package(
+            url: "https://github.com/apple/swift-argument-parser",
+            .upToNextMajor(from: "1.3.0")),
+        .package(
+            url: "https://github.com/apple/swift-algorithms",
+            .upToNextMajor(from: "1.2.0")),
+        .package(
+            url: "https://github.com/apple/swift-numerics",
+            .upToNextMajor(from: "1.0.2")),
     ],
     targets: [
         .executableTarget(
@@ -23,14 +27,8 @@ let package = Package(
                 .product(name: "ArgumentParser", package: "swift-argument-parser"),
                 "PasswordGenerators",
             ],
-            swiftSettings: [
-                .unsafeFlags(["-cross-module-optimization"], .when(configuration: .release))
-            ]),
-        .executableTarget(
-            name: "WordListFormatter",
-            dependencies: [
-                .product(name: "Algorithms", package: "swift-algorithms"),
-                .product(name: "ArgumentParser", package: "swift-argument-parser"),
+            resources: [
+                .embedInCode("Subcommands/english.txt"),
             ]),
         .target(
             name: "PasswordGenerators",

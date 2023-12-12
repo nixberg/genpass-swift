@@ -3,7 +3,7 @@ import ArgumentParser
 @main
 struct Genpass: ParsableCommand {
     static var configuration = CommandConfiguration(
-        abstract: "A utility for generating passwords.",
+        abstract: "An utility for generating passwords.",
         subcommands: [
             AppleStyle.self,
             Base32.self,
@@ -16,7 +16,7 @@ struct Genpass: ParsableCommand {
 
 struct CommonOptions: ParsableArguments {
     @Option(help: "The number of passwords to generate.")
-    var count: Int = 1
+    var count = 1
     
     @Flag(help: "Omit trailing newlines.")
     private var omitNewlines = false

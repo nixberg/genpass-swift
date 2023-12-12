@@ -27,37 +27,39 @@ public struct AppleStyleGenerator: PasswordGenerator {
     }
 }
 
-private extension Set<Character> {
-    static let consonants = Set("bcdfghjkmnpqrstvwxz")
+extension Set<Character> {
+    fileprivate static let consonants = Set("bcdfghjkmnpqrstvwxz")
     
-    static let vovels = Set("aeiouy")
+    fileprivate static let vovels = Set("aeiouy")
     
-    static let digits = Set("0123456789")
+    fileprivate static let digits = Set("0123456789")
 }
 
-private extension Array<Character> {
-    static func randomLetters(using rng: inout some RandomNumberGenerator) -> Self {
+extension Array<Character> {
+    fileprivate static func randomLetters(using rng: inout some RandomNumberGenerator) -> Self {
         (0...2).cycled().prefix(17).map {
             switch $0 {
             case 0, 2:
-                return Set.consonants.randomElement(using: &rng)!
+                Set.consonants.randomElement(using: &rng)!
             case 1:
-                return Set.vovels.randomElement(using: &rng)!
+                Set.vovels.randomElement(using: &rng)!
             default:
                 fatalError()
             }
         }
     }
     
-    mutating func uppercaseRandomCharacter(using rng: inout some RandomNumberGenerator) {
+    fileprivate mutating func uppercaseRandomCharacter(
+        using rng: inout some RandomNumberGenerator
+    ) {
         let (index, element) = self.indexed().randomSample(count: 7, using: &rng).first(where: {
             $0.element != "o"
         })! // Consonants are guaranteed to not be "o".
         self[index] = element.uppercased()!
     }
     
-    func words(using rng: inout some RandomNumberGenerator) -> [SubSequence] {
-        var words = self.chunks(ofCount: 6).map({ $0 })
+    fileprivate func words(using rng: inout some RandomNumberGenerator) -> [SubSequence] {
+        var words = [SubSequence](self.chunks(ofCount: 6))
         switch Int.random(in: 0...4, using: &rng) {
         case 0:
             words[2].appendRandomDigit(using: &rng)
@@ -72,8 +74,8 @@ private extension Array<Character> {
     }
 }
 
-private extension Character {
-    func uppercased() -> Self? {
+extension Character {
+    fileprivate func uppercased() -> Self? {
         let string: String = self.uppercased()
         guard string.count == 1 else {
             return nil
@@ -82,12 +84,14 @@ private extension Character {
     }
 }
 
-private extension ArraySlice<Character> {
-    mutating func appendRandomDigit(using rng: inout some RandomNumberGenerator) {
+extension ArraySlice<Character> {
+    fileprivate mutating func appendRandomDigit(using rng: inout some RandomNumberGenerator) {
         self.append(Set.digits.randomElement(using: &rng)!)
     }
     
-    mutating func prependOrAppendRandomDigit(using rng: inout some RandomNumberGenerator) {
+    fileprivate mutating func prependOrAppendRandomDigit(
+        using rng: inout some RandomNumberGenerator
+    ) {
         self.insert(
             Set.digits.randomElement(using: &rng)!,
             at: [startIndex, endIndex].randomElement(using: &rng)!

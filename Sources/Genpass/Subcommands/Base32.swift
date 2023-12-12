@@ -13,7 +13,11 @@ extension Genpass {
         @OptionGroup
         var securityLevelOptions: SecurityLevelOptions
         
-        mutating func run() {
+        init() {
+            assert(Set.base32ilov.count == 32)
+        }
+        
+        func run() {
             let passwordGenerator = BasicGenerator(characterSet: .base32ilov)
             print(passwords: (0..<commonOptions.count).map { _ in
                 passwordGenerator.generatePassword(
@@ -24,6 +28,6 @@ extension Genpass {
     }
 }
 
-private extension Set<Character> {
-    static let base32ilov = Set("0123456789abcdefghjkmnpqrstuwxyz")
+extension Set<Character> {
+    fileprivate static let base32ilov = Set("0123456789abcdefghjkmnpqrstuwxyz")
 }

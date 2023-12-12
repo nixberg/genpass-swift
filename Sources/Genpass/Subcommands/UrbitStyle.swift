@@ -13,7 +13,7 @@ extension Genpass {
         @OptionGroup
         var securityLevelOptions: SecurityLevelOptions
         
-        mutating func run() {
+        func run() {
             let passwordGenerator = UrbitStyleGenerator()
             print(passwords: (0..<commonOptions.count).map { _ in
                 passwordGenerator.generatePassword(

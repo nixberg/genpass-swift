@@ -10,7 +10,7 @@ extension Genpass {
         @OptionGroup
         var commonOptions: CommonOptions
         
-        mutating func run() {
+        func run() {
             let passwordGenerator = AppleStyleGenerator()
             print(passwords: (0..<commonOptions.count).map { _ in
                 passwordGenerator.generatePassword(atSecurityLevel: 64)
