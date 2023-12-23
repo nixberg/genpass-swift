@@ -59,14 +59,14 @@ extension Array<Character> {
     }
     
     fileprivate func words(using rng: inout some RandomNumberGenerator) -> [SubSequence] {
-        var words = [SubSequence](self.chunks(ofCount: 6))
+        var words = Swift.Array(self.chunks(ofCount: 6))
         switch Int.random(in: 0...4, using: &rng) {
         case 0:
             words[2].appendRandomDigit(using: &rng)
             words.swapAt(0, 2)
         case 1...4:
             words[2].prependOrAppendRandomDigit(using: &rng)
-            words[1...2].shuffle()
+            words[1...2].shuffle(using: &rng)
         default:
             fatalError()
         }
