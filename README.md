@@ -1,9 +1,9 @@
-# genpass
+# genpass-swift
 
 ## Usage
 
 ```console
-> genpass [base32]
+> genpass [base32] [64]
 2fwy5z2ah4ayg
 ```
 
@@ -19,13 +19,13 @@ detect-remain-strategy-exact-spy-security
 ```
 
 ```console
-> genpass urbit-style 96
-sicrup-sivmer-pannup-folmun-sollen-fitres
+> genpass urbit-style 96 --omit-newlines
+sicrup-sivmer-pannup-folmun-sollen-fitres⏎
 ```
 
 ```console
 > genpass help
-OVERVIEW: A utility for generating passwords.
+OVERVIEW: An utility for generating passwords.
 
 USAGE: genpass <subcommand>
 
