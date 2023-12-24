@@ -1,11 +1,13 @@
 import Numerics
 
-public struct BasicGenerator: PasswordGenerator {
-    let characterSet: Set<Character>
+public struct BasicGenerator<CharacterSet>: PasswordGenerator
+where CharacterSet: RandomAccessCollection<Character> {
+    let characterSet: CharacterSet
     let bitsPerCharacter: Float64
     
-    public init(characterSet: Set<Character>) {
+    public init(characterSet: CharacterSet) {
         precondition(characterSet.count >= 2)
+        precondition(characterSet.count == Set(characterSet).count)
         self.characterSet = characterSet
         bitsPerCharacter = .log2(Float64(characterSet.count))
     }
