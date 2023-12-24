@@ -1,14 +1,15 @@
 import Algorithms
+import OrderedCollections
 import Numerics
 
 // Reference: https://developer.apple.com/password-rules/scripts/generator.js
 
 public struct AppleStyleGenerator: PasswordGenerator {
     public init() {
-        assert(Set.consonants.count == 19)
-        assert(Set.vovels.count == 6)
-        assert(Set.digits.count == 10)
-        assert(Set.consonants.union(Set.vovels).union(Set.digits).count == 35)
+        assert(consonants.count == 19)
+        assert(vovels.count == 6)
+        assert(digits.count == 10)
+        assert(consonants.union(vovels).union(digits).count == 35)
     }
     
     public func generatePassword(
@@ -27,22 +28,20 @@ public struct AppleStyleGenerator: PasswordGenerator {
     }
 }
 
-extension Set<Character> {
-    fileprivate static let consonants = Set("bcdfghjkmnpqrstvwxz")
-    
-    fileprivate static let vovels = Set("aeiouy")
-    
-    fileprivate static let digits = Set("0123456789")
-}
+private let consonants = OrderedSet("bcdfghjkmnpqrstvwxz")
+
+private let digits = OrderedSet("0123456789")
+
+private let vovels = OrderedSet("aeiouy")
 
 extension Array<Character> {
     fileprivate static func randomLetters(using rng: inout some RandomNumberGenerator) -> Self {
         (0...2).cycled().prefix(17).map {
             switch $0 {
             case 0, 2:
-                Set.consonants.randomElement(using: &rng)!
+                consonants.randomElement(using: &rng)!
             case 1:
-                Set.vovels.randomElement(using: &rng)!
+                vovels.randomElement(using: &rng)!
             default:
                 fatalError()
             }
@@ -86,14 +85,14 @@ extension Character {
 
 extension ArraySlice<Character> {
     fileprivate mutating func appendRandomDigit(using rng: inout some RandomNumberGenerator) {
-        self.append(Set.digits.randomElement(using: &rng)!)
+        self.append(digits.randomElement(using: &rng)!)
     }
     
     fileprivate mutating func prependOrAppendRandomDigit(
         using rng: inout some RandomNumberGenerator
     ) {
         self.insert(
-            Set.digits.randomElement(using: &rng)!,
+            digits.randomElement(using: &rng)!,
             at: [startIndex, endIndex].randomElement(using: &rng)!
         )
     }

@@ -1,13 +1,12 @@
+import OrderedCollections
 import Numerics
 
-public struct PassphraseGenerator<Wordlist>: PasswordGenerator
-where Wordlist: RandomAccessCollection, Wordlist.Element: StringProtocol {
-    let wordlist: Wordlist
+public struct PassphraseGenerator<S: StringProtocol>: PasswordGenerator {
+    let wordlist: OrderedSet<S>
     let bitsPerWord: Float64
     
-    public init(wordlist: Wordlist) {
+    public init(wordlist: OrderedSet<S>) {
         precondition(wordlist.count >= 2)
-        precondition(wordlist.count == Set(wordlist).count)
         self.wordlist = wordlist
         bitsPerWord = .log2(Float64(wordlist.count))
     }

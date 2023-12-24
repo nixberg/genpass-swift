@@ -11,11 +11,14 @@ let package = Package(
     ],
     dependencies: [
         .package(
+            url: "https://github.com/apple/swift-algorithms",
+            .upToNextMajor(from: "1.2.0")),
+        .package(
             url: "https://github.com/apple/swift-argument-parser",
             .upToNextMajor(from: "1.3.0")),
         .package(
-            url: "https://github.com/apple/swift-algorithms",
-            .upToNextMajor(from: "1.2.0")),
+            url: "https://github.com/apple/swift-collections",
+            .upToNextMajor(from: "1.0.6")),
         .package(
             url: "https://github.com/apple/swift-numerics",
             .upToNextMajor(from: "1.0.2")),
@@ -25,6 +28,7 @@ let package = Package(
             name: "Genpass",
             dependencies: [
                 .product(name: "ArgumentParser", package: "swift-argument-parser"),
+                .product(name: "OrderedCollections", package: "swift-collections"),
                 "PasswordGenerators",
             ],
             resources: [
@@ -35,6 +39,7 @@ let package = Package(
             dependencies: [
                 .product(name: "Algorithms", package: "swift-algorithms"),
                 .product(name: "Numerics", package: "swift-numerics"),
+                .product(name: "OrderedCollections", package: "swift-collections"),
             ]),
     ]
 )

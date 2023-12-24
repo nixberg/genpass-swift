@@ -1,4 +1,5 @@
 import ArgumentParser
+import OrderedCollections
 import PasswordGenerators
 
 extension Genpass {
@@ -14,7 +15,7 @@ extension Genpass {
         var securityLevelOptions: SecurityLevelOptions
         
         func run() {
-            let characterSet = Array("0123456789abcdefghjkmnpqrstuwxyz")
+            let characterSet = OrderedSet("0123456789abcdefghjkmnpqrstuwxyz")
             assert(characterSet.count == 32)
             
             let passwordGenerator = BasicGenerator(characterSet: characterSet)

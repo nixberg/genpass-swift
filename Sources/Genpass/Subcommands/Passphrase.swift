@@ -1,6 +1,7 @@
 import ArgumentParser
+import OrderedCollections
 import PasswordGenerators
-import Foundation
+import Foundation // TODO: SE-0405
 
 extension Genpass {
     struct Passphrase: PasswordGeneratingCommand {
@@ -15,10 +16,10 @@ extension Genpass {
         var securityLevelOptions: SecurityLevelOptions
         
         func run() {
-            let wordlist = String(
+            let wordlist = OrderedSet(String(
                 bytes: PackageResources.english_txt,
                 encoding: .ascii
-            )!.split(separator: "\n") // TODO: SE-0405
+            )!.split(separator: "\n"))
             assert(wordlist.count == 2048)
             
             let passwordGenerator = PassphraseGenerator(wordlist: wordlist)

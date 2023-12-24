@@ -1,13 +1,12 @@
+import OrderedCollections
 import Numerics
 
-public struct BasicGenerator<CharacterSet>: PasswordGenerator
-where CharacterSet: RandomAccessCollection<Character> {
-    let characterSet: CharacterSet
+public struct BasicGenerator: PasswordGenerator {
+    let characterSet: OrderedSet<Character>
     let bitsPerCharacter: Float64
     
-    public init(characterSet: CharacterSet) {
+    public init(characterSet: OrderedSet<Character>) {
         precondition(characterSet.count >= 2)
-        precondition(characterSet.count == Set(characterSet).count)
         self.characterSet = characterSet
         bitsPerCharacter = .log2(Float64(characterSet.count))
     }
