@@ -2,7 +2,7 @@ import ArgumentParser
 import PasswordGenerators
 
 extension Genpass {
-    struct Base32: ParsableCommand {
+    struct Base32: PasswordGeneratingCommand {
         static var configuration = CommandConfiguration(
             abstract: "Generate a password from a 32-character set."
         )
@@ -13,17 +13,16 @@ extension Genpass {
         @OptionGroup
         var securityLevelOptions: SecurityLevelOptions
         
-        init() {
-            assert(Set.base32ilov.count == 32)
-        }
-        
         func run() {
+            assert(Set.base32ilov.count == 32)
+            
             let passwordGenerator = BasicGenerator(characterSet: .base32ilov)
-            print(passwords: (0..<commonOptions.count).map { _ in
+            
+            self.runWithGenerator {
                 passwordGenerator.generatePassword(
                     atSecurityLevel: securityLevelOptions.securityLevel
                 )
-            }, terminator: commonOptions.terminator)
+            }
         }
     }
 }

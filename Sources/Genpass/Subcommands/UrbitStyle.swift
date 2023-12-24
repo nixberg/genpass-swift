@@ -2,7 +2,7 @@ import ArgumentParser
 import PasswordGenerators
 
 extension Genpass {
-    struct UrbitStyle: ParsableCommand {
+    struct UrbitStyle: PasswordGeneratingCommand {
         static var configuration = CommandConfiguration(
             abstract: "Generate a password in the style of Urbit’s @q encoding."
         )
@@ -15,11 +15,12 @@ extension Genpass {
         
         func run() {
             let passwordGenerator = UrbitStyleGenerator()
-            print(passwords: (0..<commonOptions.count).map { _ in
+            
+            self.runWithGenerator {
                 passwordGenerator.generatePassword(
                     atSecurityLevel: securityLevelOptions.securityLevel
                 )
-            }, terminator: commonOptions.terminator)
+            }
         }
     }
 }

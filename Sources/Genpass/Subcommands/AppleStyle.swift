@@ -2,7 +2,7 @@ import ArgumentParser
 import PasswordGenerators
 
 extension Genpass {
-    struct AppleStyle: ParsableCommand {
+    struct AppleStyle: PasswordGeneratingCommand {
         static var configuration = CommandConfiguration(
             abstract: "Generate a password in the style of Apple’s Password AutoFill."
         )
@@ -12,9 +12,10 @@ extension Genpass {
         
         func run() {
             let passwordGenerator = AppleStyleGenerator()
-            print(passwords: (0..<commonOptions.count).map { _ in
+            
+            self.runWithGenerator {
                 passwordGenerator.generatePassword(atSecurityLevel: 64)
-            }, terminator: commonOptions.terminator)
+            }
         }
     }
 }
