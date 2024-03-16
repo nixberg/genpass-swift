@@ -1,4 +1,4 @@
-// swift-tools-version:5.9
+// swift-tools-version:5.10
 
 import PackageDescription
 
@@ -12,16 +12,16 @@ let package = Package(
     dependencies: [
         .package(
             url: "https://github.com/apple/swift-algorithms",
-            .upToNextMajor(from: "1.2.0")),
+            from: "1.2.0"),
         .package(
             url: "https://github.com/apple/swift-argument-parser",
-            .upToNextMajor(from: "1.3.0")),
+            from: "1.3.1"),
         .package(
             url: "https://github.com/apple/swift-collections",
-            .upToNextMajor(from: "1.0.6")),
+            from: "1.0.6"),
         .package(
             url: "https://github.com/apple/swift-numerics",
-            .upToNextMajor(from: "1.0.2")),
+            from: "1.0.2"),
     ],
     targets: [
         .executableTarget(
@@ -33,13 +33,37 @@ let package = Package(
             ],
             resources: [
                 .embedInCode("Subcommands/english.txt"),
-            ]),
+            ],
+            swiftSettings: .allUpcomingFeatures),
         .target(
             name: "PasswordGenerators",
             dependencies: [
                 .product(name: "Algorithms", package: "swift-algorithms"),
                 .product(name: "Numerics", package: "swift-numerics"),
                 .product(name: "OrderedCollections", package: "swift-collections"),
-            ]),
+            ],
+            swiftSettings: .allUpcomingFeatures),
     ]
 )
+
+extension [SwiftSetting] {
+    // As of 2024-03-13: https://www.swift.org/swift-evolution/#?upcoming=true
+    static var allUpcomingFeatures: Self {
+        [
+            .enableExperimentalFeature("StrictConcurrency"),
+            .enableUpcomingFeature("StrictConcurrency"),
+            
+            .enableUpcomingFeature("FullTypedThrows"),
+            .enableUpcomingFeature("InternalImportsByDefault"),
+            .enableUpcomingFeature("InferSendableFromCaptures"),
+            .enableUpcomingFeature("IsolatedDefaultValues"),
+            .enableUpcomingFeature("DisableOutwardActorInference"),
+            .enableUpcomingFeature("ImportObjcForwardDeclarations"),
+            .enableUpcomingFeature("DeprecateApplicationMain"),
+            .enableUpcomingFeature("BareSlashRegexLiterals"),
+            .enableUpcomingFeature("ExistentialAny"),
+            .enableUpcomingFeature("ForwardTrailingClosures"),
+            .enableUpcomingFeature("ConciseMagicFile"),
+        ]
+    }
+}
