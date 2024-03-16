@@ -3,7 +3,7 @@ import OrderedCollections
 import PasswordGenerators
 
 extension Genpass {
-    struct Base32: PasswordGeneratingCommand {
+    struct Base32: PasswordGeneratingCommandWithSecurityLevel {
         static let configuration = CommandConfiguration(
             abstract: "Generate a password from a 32-character set."
         )
@@ -17,14 +17,7 @@ extension Genpass {
         func run() {
             let characterSet = OrderedSet("0123456789abcdefghjkmnpqrstuwxyz")
             assert(characterSet.count == 32)
-            
-            let passwordGenerator = BasicGenerator(characterSet: characterSet)
-            
-            self.runWithGenerator {
-                passwordGenerator.generatePassword(
-                    atSecurityLevel: securityLevelOptions.securityLevel
-                )
-            }
+            self.run(withGenerator: BasicGenerator(characterSet: characterSet))
         }
     }
 }

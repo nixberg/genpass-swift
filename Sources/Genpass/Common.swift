@@ -1,4 +1,5 @@
 import ArgumentParser
+import PasswordGenerators
 
 struct CommonOptions: ParsableArguments {
     @Option(help: "The number of passwords to generate.")
@@ -37,9 +38,22 @@ protocol PasswordGeneratingCommand: ParsableCommand {
 }
 
 extension PasswordGeneratingCommand {
-    func runWithGenerator(_ generatePassword: () -> String) {
+    func run(withGenerator generator: some PasswordGenerator, securityLevel: Float64) {
         for _ in 0..<commonOptions.count {
-            print(generatePassword(), terminator: commonOptions.terminator)
+            print(
+                generator.generatePassword(atSecurityLevel: securityLevel),
+                terminator: commonOptions.terminator
+            )
         }
+    }
+}
+
+protocol PasswordGeneratingCommandWithSecurityLevel: PasswordGeneratingCommand {
+    var securityLevelOptions: SecurityLevelOptions { get }
+}
+
+extension PasswordGeneratingCommandWithSecurityLevel {
+    func run(withGenerator generator: some PasswordGenerator) {
+        self.run(withGenerator: generator, securityLevel: securityLevelOptions.securityLevel)
     }
 }

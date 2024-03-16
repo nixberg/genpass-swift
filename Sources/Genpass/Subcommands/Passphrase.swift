@@ -4,7 +4,7 @@ import PasswordGenerators
 import Foundation // TODO: SE-0405
 
 extension Genpass {
-    struct Passphrase: PasswordGeneratingCommand {
+    struct Passphrase: PasswordGeneratingCommandWithSecurityLevel {
         static let configuration = CommandConfiguration(
             abstract: "Generate a passphrase from a set of words."
         )
@@ -21,14 +21,7 @@ extension Genpass {
                 encoding: .ascii
             )!.split(separator: "\n"))
             assert(wordlist.count == 2048)
-            
-            let passwordGenerator = PassphraseGenerator(wordlist: wordlist)
-            
-            self.runWithGenerator {
-                passwordGenerator.generatePassword(
-                    atSecurityLevel: securityLevelOptions.securityLevel
-                )
-            }
+            self.run(withGenerator: PassphraseGenerator(wordlist: wordlist))
         }
     }
 }

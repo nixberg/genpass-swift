@@ -11,11 +11,7 @@ extension Genpass {
         var commonOptions: CommonOptions
         
         func run() {
-            let passwordGenerator = AppleStyleGenerator()
-            
-            self.runWithGenerator {
-                passwordGenerator.generatePassword(atSecurityLevel: 64)
-            }
+            self.run(withGenerator: AppleStyleGenerator(), securityLevel: 64)
         }
     }
 }
