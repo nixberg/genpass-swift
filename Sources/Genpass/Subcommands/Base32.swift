@@ -4,7 +4,7 @@ import PasswordGenerators
 
 extension Genpass {
     struct Base32: PasswordGeneratingCommand {
-        static var configuration = CommandConfiguration(
+        static let configuration = CommandConfiguration(
             abstract: "Generate a password from a 32-character set."
         )
         

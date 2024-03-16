@@ -2,7 +2,7 @@ import ArgumentParser
 
 @main
 struct Genpass: ParsableCommand {
-    static var configuration = CommandConfiguration(
+    static let configuration = CommandConfiguration(
         abstract: "An utility for generating passwords.",
         subcommands: [
             AppleStyle.self,

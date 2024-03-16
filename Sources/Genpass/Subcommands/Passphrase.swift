@@ -5,7 +5,7 @@ import Foundation // TODO: SE-0405
 
 extension Genpass {
     struct Passphrase: PasswordGeneratingCommand {
-        static var configuration = CommandConfiguration(
+        static let configuration = CommandConfiguration(
             abstract: "Generate a passphrase from a set of words."
         )
         

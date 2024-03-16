@@ -3,7 +3,7 @@ import PasswordGenerators
 
 extension Genpass {
     struct UrbitStyle: PasswordGeneratingCommand {
-        static var configuration = CommandConfiguration(
+        static let configuration = CommandConfiguration(
             abstract: "Generate a password in the style of Urbit’s @q encoding."
         )
         
