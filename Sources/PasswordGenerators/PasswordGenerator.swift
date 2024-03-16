@@ -1,5 +1,5 @@
 public protocol PasswordGenerator {
-    associatedtype Output: LosslessStringConvertible
+    associatedtype Output: CustomStringConvertible
     
     func generatePassword(
         atSecurityLevel securityLevel: Float64,
