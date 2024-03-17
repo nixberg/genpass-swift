@@ -11,7 +11,7 @@ public struct UrbitStyleGenerator: PasswordGenerator {
         atSecurityLevel securityLevel: Float64,
         using rng: inout some RandomNumberGenerator
     ) -> String {
-        let wordCount = Int(roundingUp: securityLevel / (2 * 8))
+        let wordCount = Int(roundingUp: securityLevel / (2 * 8))!
         return zip(
             prefixes.randomSampleWithReplacement(count: wordCount, using: &rng),
             suffixes.randomSampleWithReplacement(count: wordCount, using: &rng)

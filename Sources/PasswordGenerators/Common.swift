@@ -1,6 +1,6 @@
 extension BinaryInteger {
-    init(roundingUp source: some BinaryFloatingPoint) {
-        self.init(exactly: source.rounded(.up))!
+    package init?(roundingUp source: some BinaryFloatingPoint) {
+        self.init(exactly: source.rounded(.up))
     }
 }
 

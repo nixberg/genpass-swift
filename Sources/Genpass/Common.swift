@@ -27,7 +27,7 @@ struct SecurityLevelOptions: ParsableArguments {
         guard securityLevel > 0 else {
             throw ValidationError("Please specify a 'security-level' greater than zero.")
         }
-        guard let _ = Int(exactly: securityLevel.rounded(.up)) else {
+        guard Int(roundingUp: securityLevel) != nil else {
             throw ValidationError("Please specify a smaller 'security-level'.")
         }
     }

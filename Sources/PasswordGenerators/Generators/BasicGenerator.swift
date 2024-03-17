@@ -16,7 +16,7 @@ public struct BasicGenerator: PasswordGenerator {
         using rng: inout some RandomNumberGenerator
     ) -> String {
         String(characterSet.randomSampleWithReplacement(
-            count: Int(roundingUp: securityLevel / bitsPerCharacter),
+            count: Int(roundingUp: securityLevel / bitsPerCharacter)!,
             using: &rng
         ))
     }

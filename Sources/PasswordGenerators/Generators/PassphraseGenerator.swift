@@ -16,7 +16,7 @@ public struct PassphraseGenerator<S: StringProtocol>: PasswordGenerator {
         using rng: inout some RandomNumberGenerator
     ) -> String {
         wordlist.randomSampleWithReplacement(
-            count: Int(roundingUp: securityLevel / bitsPerWord),
+            count: Int(roundingUp: securityLevel / bitsPerWord)!,
             using: &rng
         ).joined(separator: "-")
     }
