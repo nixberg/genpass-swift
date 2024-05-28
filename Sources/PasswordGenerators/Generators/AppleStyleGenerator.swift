@@ -1,6 +1,5 @@
 import Algorithms
 import OrderedCollections
-import Numerics
 
 // Reference: https://developer.apple.com/password-rules/scripts/generator.js
 
@@ -16,7 +15,8 @@ public struct AppleStyleGenerator: PasswordGenerator {
         atSecurityLevel securityLevel: Float64,
         using rng: inout some RandomNumberGenerator
     ) -> String {
-        precondition(securityLevel <= 11 * .log2(19) + 6 * .log2(6) + .log2(10)) // Conservatively.
+        // 65 bits < .log2(19) * 11 + .log2(6) * 6 + .log2(10) < real security level.
+        precondition(securityLevel <= 65)
         
         var letters = Array.randomLetters(using: &rng)
         
