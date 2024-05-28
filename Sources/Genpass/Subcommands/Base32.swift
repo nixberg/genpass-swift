@@ -5,7 +5,8 @@ import PasswordGenerators
 extension Genpass {
     struct Base32: PasswordGeneratingCommandWithSecurityLevel {
         static let configuration = CommandConfiguration(
-            abstract: "Generate a password from a 32-character set."
+            abstract: "Generate a password from a 32-character set.",
+            aliases: ["b"]
         )
         
         @OptionGroup

@@ -6,7 +6,8 @@ import Foundation // TODO: SE-0405
 extension Genpass {
     struct Passphrase: PasswordGeneratingCommandWithSecurityLevel {
         static let configuration = CommandConfiguration(
-            abstract: "Generate a passphrase from a set of words."
+            abstract: "Generate a passphrase from a set of 2048 English words.",
+            aliases: ["p"]
         )
         
         @OptionGroup

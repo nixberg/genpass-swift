@@ -15,10 +15,10 @@ let package = Package(
             from: "1.2.0"),
         .package(
             url: "https://github.com/apple/swift-argument-parser",
-            from: "1.3.1"),
+            from: "1.4.0"),
         .package(
             url: "https://github.com/apple/swift-collections",
-            from: "1.0.6"),
+            from: "1.1.0"),
         .package(
             url: "https://github.com/apple/swift-numerics",
             from: "1.0.2"),
@@ -33,37 +33,13 @@ let package = Package(
             ],
             resources: [
                 .embedInCode("Subcommands/english.txt"),
-            ],
-            swiftSettings: .allUpcomingFeatures),
+            ]),
         .target(
             name: "PasswordGenerators",
             dependencies: [
                 .product(name: "Algorithms", package: "swift-algorithms"),
                 .product(name: "Numerics", package: "swift-numerics"),
                 .product(name: "OrderedCollections", package: "swift-collections"),
-            ],
-            swiftSettings: .allUpcomingFeatures),
+            ]),
     ]
 )
-
-extension [SwiftSetting] {
-    // As of 2024-03-13: https://www.swift.org/swift-evolution/#?upcoming=true
-    static var allUpcomingFeatures: Self {
-        [
-            .enableExperimentalFeature("StrictConcurrency"),
-            .enableUpcomingFeature("StrictConcurrency"),
-            
-            .enableUpcomingFeature("FullTypedThrows"),
-            .enableUpcomingFeature("InternalImportsByDefault"),
-            .enableUpcomingFeature("InferSendableFromCaptures"),
-            .enableUpcomingFeature("IsolatedDefaultValues"),
-            .enableUpcomingFeature("DisableOutwardActorInference"),
-            .enableUpcomingFeature("ImportObjcForwardDeclarations"),
-            .enableUpcomingFeature("DeprecateApplicationMain"),
-            .enableUpcomingFeature("BareSlashRegexLiterals"),
-            .enableUpcomingFeature("ExistentialAny"),
-            .enableUpcomingFeature("ForwardTrailingClosures"),
-            .enableUpcomingFeature("ConciseMagicFile"),
-        ]
-    }
-}
