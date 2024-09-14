@@ -1,4 +1,4 @@
-// swift-tools-version:5.10
+// swift-tools-version: 6.0
 
 import PackageDescription
 
@@ -15,13 +15,13 @@ let package = Package(
             from: "1.2.0"),
         .package(
             url: "https://github.com/apple/swift-argument-parser",
-            from: "1.4.0"),
+            from: "1.5.0"),
         .package(
             url: "https://github.com/apple/swift-collections",
             from: "1.1.0"),
         .package(
             url: "https://github.com/apple/swift-numerics",
-            from: "1.0.2"),
+            from: "1.0.0"),
     ],
     targets: [
         .executableTarget(
