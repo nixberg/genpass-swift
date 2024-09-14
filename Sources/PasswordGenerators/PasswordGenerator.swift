@@ -1,6 +1,6 @@
 public protocol PasswordGenerator {
     associatedtype Output: CustomStringConvertible
-    
+
     func generatePassword(
         atSecurityLevel securityLevel: Float64,
         using rng: inout some RandomNumberGenerator

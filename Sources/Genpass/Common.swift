@@ -4,14 +4,14 @@ import PasswordGenerators
 struct CommonOptions: ParsableArguments {
     @Option(help: "The number of passwords to generate.")
     var count = 1
-    
+
     @Flag(help: "Omit trailing newlines.")
     private var omitNewlines = false
-    
+
     var terminator: String {
         omitNewlines ? "" : "\n"
     }
-    
+
     func validate() throws {
         guard count > 0 else {
             throw ValidationError("Please specify a 'count' greater than zero.")
@@ -20,9 +20,9 @@ struct CommonOptions: ParsableArguments {
 }
 
 struct SecurityLevelOptions: ParsableArguments {
-    @Argument(help: "The desired security level in bits." )
+    @Argument(help: "The desired security level in bits.")
     var securityLevel: Float64 = 64
-    
+
     func validate() throws {
         guard securityLevel > 0 else {
             throw ValidationError("Please specify a 'security-level' greater than zero.")
