@@ -1,25 +1,29 @@
-import Numerics
-import OrderedCollections
+public import OrderedCollections
 
-public struct BasicGenerator: PasswordGenerator {
-    let characterSet: OrderedSet<Character>
-    let bitsPerCharacter: Float64
+public struct BasicGenerator<S>: PasswordGenerator
+where S: CustomStringConvertible & Hashable & Sendable {
+    let symbols: OrderedSet<S>
 
-    public init(characterSet: OrderedSet<Character>) {
-        precondition(characterSet.count >= 2)
-        self.characterSet = characterSet
-        bitsPerCharacter = .log2(Float64(characterSet.count))
+    let separator: String
+
+    let bitsPerSymbol: Float64
+
+    public init?(symbols: OrderedSet<S>, separator: String) {
+        guard symbols.count >= 2 else {
+            return nil
+        }
+        self.symbols = symbols
+        self.separator = separator
+        bitsPerSymbol = Double(symbols.count._binaryLogarithm())
     }
 
     public func generatePassword(
-        atSecurityLevel securityLevel: Float64,
-        using rng: inout some RandomNumberGenerator
+        atSecurityLevel securityLevel: SecurityLevel,
+        using generator: inout some RandomNumberGenerator,
     ) -> String {
-        String(
-            characterSet.randomSampleWithReplacement(
-                count: Int(roundingUp: securityLevel / bitsPerCharacter)!,
-                using: &rng
-            )
-        )
+        return symbols.randomSampleWithReplacement(
+            count: securityLevel.elementCount(forBitsPerElement: bitsPerSymbol),
+            using: &generator,
+        ).lazy.map(String.init(describing:)).joined(separator: separator)
     }
 }

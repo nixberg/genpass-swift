@@ -10,6 +10,6 @@ struct Genpass: ParsableCommand {
             Passphrase.self,
             UrbitStyle.self,
         ],
-        defaultSubcommand: Base32.self
+        defaultSubcommand: AppleStyle.self,
     )
 }

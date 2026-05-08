@@ -21,16 +21,7 @@ struct CommonOptions: ParsableArguments {
 
 struct SecurityLevelOptions: ParsableArguments {
     @Argument(help: "The desired security level in bits.")
-    var securityLevel: Float64 = 64
-
-    func validate() throws {
-        guard securityLevel > 0 else {
-            throw ValidationError("Please specify a 'security-level' greater than zero.")
-        }
-        guard Int(roundingUp: securityLevel) != nil else {
-            throw ValidationError("Please specify a smaller 'security-level'.")
-        }
-    }
+    var securityLevel: SecurityLevel = 64
 }
 
 protocol PasswordGeneratingCommand: ParsableCommand {
@@ -38,21 +29,21 @@ protocol PasswordGeneratingCommand: ParsableCommand {
 }
 
 extension PasswordGeneratingCommand {
-    func run(withGenerator generator: some PasswordGenerator, securityLevel: Float64) {
+    func run(withGenerator generator: some PasswordGenerator, securityLevel: SecurityLevel) {
         for _ in 0..<commonOptions.count {
             print(
                 generator.generatePassword(atSecurityLevel: securityLevel),
-                terminator: commonOptions.terminator
+                terminator: commonOptions.terminator,
             )
         }
     }
 }
 
-protocol PasswordGeneratingCommandWithSecurityLevel: PasswordGeneratingCommand {
+protocol PasswordGeneratingCommandWithSecurityLevelOptions: PasswordGeneratingCommand {
     var securityLevelOptions: SecurityLevelOptions { get }
 }
 
-extension PasswordGeneratingCommandWithSecurityLevel {
+extension PasswordGeneratingCommandWithSecurityLevelOptions {
     func run(withGenerator generator: some PasswordGenerator) {
         self.run(withGenerator: generator, securityLevel: securityLevelOptions.securityLevel)
     }

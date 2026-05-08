@@ -3,7 +3,7 @@ import OrderedCollections
 import PasswordGenerators
 
 extension Genpass {
-    struct Passphrase: PasswordGeneratingCommandWithSecurityLevel {
+    struct Passphrase: PasswordGeneratingCommandWithSecurityLevelOptions {
         static let configuration = CommandConfiguration(
             abstract: "Generate a passphrase from a set of 2048 English words.",
             aliases: ["p"]
@@ -18,12 +18,12 @@ extension Genpass {
         func run() {
             let wordlist = OrderedSet(
                 String(
-                    bytes: PackageResources.english_txt,
-                    encoding: .ascii
+                    validating: PackageResources.english_txt,
+                    as: UTF8.self
                 )!.split(separator: "\n")
             )
-            assert(wordlist.count == 2048)
-            self.run(withGenerator: PassphraseGenerator(wordlist: wordlist))
+            precondition(wordlist.count == 2048)
+            self.run(withGenerator: BasicGenerator(symbols: wordlist, separator: "-")!)
         }
     }
 }

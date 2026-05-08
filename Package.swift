@@ -1,27 +1,35 @@
-// swift-tools-version: 6.0
+// swift-tools-version: 6.3
 
 import PackageDescription
 
+let commonSwiftSettings: [SwiftSetting] = [
+    .enableExperimentalFeature("Lifetimes"),
+    .enableExperimentalFeature("LifetimeDependence"),
+    .enableUpcomingFeature("InternalImportsByDefault"),
+    .enableUpcomingFeature("MemberImportVisibility"),
+    .strictMemorySafety(),
+]
+
 let package = Package(
     name: "genpass-swift",
+    platforms: [
+        .macOS(.v15)
+    ],
     products: [
         .executable(
             name: "genpass",
-            targets: ["Genpass"]),
+            targets: ["Genpass"])
     ],
     dependencies: [
         .package(
-            url: "https://github.com/apple/swift-algorithms",
+            url: "https://github.com/apple/swift-algorithms.git",
             from: "1.2.0"),
         .package(
-            url: "https://github.com/apple/swift-argument-parser",
+            url: "https://github.com/apple/swift-argument-parser.git",
             from: "1.5.0"),
         .package(
-            url: "https://github.com/apple/swift-collections",
+            url: "https://github.com/apple/swift-collections.git",
             from: "1.1.0"),
-        .package(
-            url: "https://github.com/apple/swift-numerics",
-            from: "1.0.0"),
     ],
     targets: [
         .executableTarget(
@@ -32,14 +40,15 @@ let package = Package(
                 "PasswordGenerators",
             ],
             resources: [
-                .embedInCode("Subcommands/english.txt"),
-            ]),
+                .embedInCode("Subcommands/english.txt")
+            ],
+            swiftSettings: commonSwiftSettings),
         .target(
             name: "PasswordGenerators",
             dependencies: [
                 .product(name: "Algorithms", package: "swift-algorithms"),
-                .product(name: "Numerics", package: "swift-numerics"),
                 .product(name: "OrderedCollections", package: "swift-collections"),
-            ]),
+            ],
+            swiftSettings: commonSwiftSettings),
     ]
 )

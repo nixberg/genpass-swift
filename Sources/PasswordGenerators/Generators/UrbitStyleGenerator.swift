@@ -2,24 +2,26 @@ import OrderedCollections
 
 public struct UrbitStyleGenerator: PasswordGenerator {
     public init() {
-        assert(prefixes.count == 256)
-        assert(suffixes.count == 256)
-        assert(prefixes.isDisjoint(with: suffixes))
+        precondition(prefixes.count == 256)
+        precondition(suffixes.count == 256)
+        precondition(prefixes.allSatisfy({ $0.count == 3 }))
+        precondition(suffixes.allSatisfy({ $0.count == 3 }))
+        precondition(prefixes.isDisjoint(with: suffixes))
     }
 
     public func generatePassword(
-        atSecurityLevel securityLevel: Float64,
-        using rng: inout some RandomNumberGenerator
+        atSecurityLevel securityLevel: SecurityLevel,
+        using generator: inout some RandomNumberGenerator,
     ) -> String {
-        let wordCount = Int(roundingUp: securityLevel / (2 * 8))!
+        let wordCount = securityLevel.elementCount(forBitsPerElement: 16)
         return zip(
-            prefixes.randomSampleWithReplacement(count: wordCount, using: &rng),
-            suffixes.randomSampleWithReplacement(count: wordCount, using: &rng)
+            prefixes.randomSampleWithReplacement(count: wordCount, using: &generator),
+            suffixes.randomSampleWithReplacement(count: wordCount, using: &generator),
         ).lazy.map(+).joined(separator: "-")
     }
 }
 
-private let prefixes: OrderedSet<String> = [
+fileprivate let prefixes: OrderedSet<String> = [
     "doz", "mar", "bin", "wan", "sam", "lit", "sig", "hid", "fid", "lis", "sog", "dir", "wac",
     "sab", "wis", "sib", "rig", "sol", "dop", "mod", "fog", "lid", "hop", "dar", "dor", "lor",
     "hod", "fol", "rin", "tog", "sil", "mir", "hol", "pas", "lac", "rov", "liv", "dal", "sat",
@@ -42,7 +44,7 @@ private let prefixes: OrderedSet<String> = [
     "fod", "pon", "sov", "noc", "sor", "lav", "mat", "mip", "fip",
 ]
 
-private let suffixes: OrderedSet<String> = [
+fileprivate let suffixes: OrderedSet<String> = [
     "zod", "nec", "bud", "wes", "sev", "per", "sut", "let", "ful", "pen", "syt", "dur", "wep",
     "ser", "wyl", "sun", "ryp", "syx", "dyr", "nup", "heb", "peg", "lup", "dep", "dys", "put",
     "lug", "hec", "ryt", "tyv", "syd", "nex", "lun", "mep", "lut", "sep", "pes", "del", "sul",

@@ -1,17 +1,17 @@
 public protocol PasswordGenerator {
-    associatedtype Output: CustomStringConvertible
+    associatedtype Output: StringProtocol
 
     func generatePassword(
-        atSecurityLevel securityLevel: Float64,
-        using rng: inout some RandomNumberGenerator
+        atSecurityLevel securityLevel: SecurityLevel,
+        using generator: inout some RandomNumberGenerator,
     ) -> Output
 }
 
 extension PasswordGenerator {
     public func generatePassword(
-        atSecurityLevel securityLevel: Float64
+        atSecurityLevel securityLevel: SecurityLevel,
     ) -> Output {
-        var rng = SystemRandomNumberGenerator()
-        return self.generatePassword(atSecurityLevel: securityLevel, using: &rng)
+        var generator = SystemRandomNumberGenerator()
+        return self.generatePassword(atSecurityLevel: securityLevel, using: &generator)
     }
 }
