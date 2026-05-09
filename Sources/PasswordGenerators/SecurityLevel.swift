@@ -1,4 +1,6 @@
-public struct SecurityLevel: Equatable, RawRepresentable, Sendable {
+public import ArgumentParser
+
+public struct SecurityLevel: Decodable, Equatable, RawRepresentable, Sendable {
     public static let min = Self(unchecked: 0)
 
     public static let max = Self(unchecked: 32768)
@@ -47,9 +49,6 @@ extension SecurityLevel: ExpressibleByIntegerLiteral {
     }
 }
 
-#if canImport(ArgumentParser)
-public import ArgumentParser
-
 extension SecurityLevel: ExpressibleByArgument {
     public init?(argument: String) {
         guard let rawValue = Double(argument) else {
@@ -58,4 +57,3 @@ extension SecurityLevel: ExpressibleByArgument {
         self.init(rawValue: rawValue)
     }
 }
-#endif

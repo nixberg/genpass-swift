@@ -46,6 +46,7 @@ let package = Package(
         .target(
             name: "PasswordGenerators",
             dependencies: [
+                .product(name: "ArgumentParser", package: "swift-argument-parser"),
                 .product(name: "Algorithms", package: "swift-algorithms"),
                 .product(name: "OrderedCollections", package: "swift-collections"),
             ],
